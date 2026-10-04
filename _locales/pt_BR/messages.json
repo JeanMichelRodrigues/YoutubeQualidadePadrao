@@ -1,0 +1,10 @@
+{
+  "extName": { "message": "Qualidade Padrão para YouTube" },
+  "extDesc": { "message": "Define a qualidade de vídeo padrão do YouTube (ex.: sempre 1080p ou a máxima disponível) e aplica em todo vídeo." },
+  "headerTitle": { "message": "Qualidade padrão" },
+  "enabled": { "message": "Ativada" },
+  "ignoreLive": { "message": "Não aplicar em vídeos ao vivo" },
+  "max": { "message": "Máxima" },
+  "hint": { "message": "Se o vídeo não tiver a qualidade escolhida, a extensão usa a mais alta disponível abaixo dela." },
+  "donate": { "message": "☕ Gostou? Apoie o projeto" }
+}
