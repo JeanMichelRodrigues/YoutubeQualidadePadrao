@@ -1,6 +1,6 @@
 {
   "extName": { "message": "Default Quality for YouTube" },
-  "extDesc": { "message": "Sets the default YouTube video quality, with a separate choice for regular videos, live streams and music, and applies it to every video." },
+  "extDesc": { "message": "Sets the default YouTube video quality, with separate choices for regular videos, live streams and music." },
   "headerTitle": { "message": "Default quality" },
   "enabled": { "message": "Enabled" },
   "same": { "message": "Same quality for all videos" },

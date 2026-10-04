@@ -1,6 +1,6 @@
 {
   "extName": { "message": "Qualidade Padrão para YouTube" },
-  "extDesc": { "message": "Define a qualidade de vídeo padrão do YouTube, com uma escolha para vídeos comuns, lives e músicas, e aplica em todo vídeo." },
+  "extDesc": { "message": "Define a qualidade de vídeo padrão do YouTube, com escolha separada para vídeos comuns, lives e músicas." },
   "headerTitle": { "message": "Qualidade padrão" },
   "enabled": { "message": "Ativada" },
   "same": { "message": "Mesma qualidade para todos os vídeos" },

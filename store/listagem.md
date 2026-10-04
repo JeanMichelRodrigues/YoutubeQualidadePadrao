@@ -8,8 +8,8 @@ automaticamente no idioma do navegador (padrão: inglês). Na loja, preencha a l
 - EN: Default Quality for YouTube
 
 ## Resumo (máx. 132 caracteres) — vem do manifest
-- PT-BR: Define a qualidade de vídeo padrão do YouTube (ex.: sempre 1080p ou a máxima disponível) e aplica em todo vídeo.
-- EN: Sets the default YouTube video quality (e.g. always 1080p or the highest available) and applies it to every video.
+- PT-BR: Define a qualidade de vídeo padrão do YouTube, com escolha separada para vídeos comuns, lives e músicas.
+- EN: Sets the default YouTube video quality, with separate choices for regular videos, live streams and music.
 
 ## Categoria
 Produtividade (ou "Ferramentas")
