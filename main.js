@@ -67,5 +67,19 @@
     )
   );
   document.addEventListener("yt-navigate-finish", () => apply(true));
-  document.addEventListener("yt-default-quality-changed", () => apply(true));
+  // Troca feita no popup com o vídeo aberto: o player às vezes ignora a mudança no meio da
+  // reprodução; se a qualidade não mudou, um seek na posição atual o faz recarregar o stream.
+  document.addEventListener("yt-default-quality-changed", () => {
+    apply(true);
+    setTimeout(() => {
+      const c = cfg();
+      const p = player();
+      if (!c || !c.enabled || !p || typeof p.getPlaybackQuality !== "function") return;
+      const want = pick(c.quality, p.getAvailableQualityLevels() || []);
+      if (want && p.getPlaybackQuality() !== want && typeof p.seekTo === "function") {
+        setQuality();
+        p.seekTo(p.getCurrentTime(), true);
+      }
+    }, 700);
+  });
 })();
