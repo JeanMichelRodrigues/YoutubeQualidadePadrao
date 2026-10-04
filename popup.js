@@ -6,31 +6,57 @@ document.querySelectorAll("[data-i18n]").forEach((el) => (el.textContent = t(el.
 
 let state = { ...DQ_DEFAULTS };
 
-// "Máxima" primeiro, depois cada nível do menor ao maior.
-const OPTIONS = [["max", t("max")], ...DQ_LEVELS];
-const buttons = OPTIONS.map(([value, label]) => {
-  const b = document.createElement("button");
-  b.className = "level";
-  b.textContent = label;
-  b.onclick = () => {
-    state.quality = value;
-    render();
-    chrome.storage.sync.set({ quality: value });
+// Posições da barra: Automática, cada nível do menor ao maior e Máxima.
+const STEPS = [["auto", t("auto")], ...DQ_LEVELS, ["max", t("max")]];
+const stepOf = (value) => Math.max(0, STEPS.findIndex(([v]) => v === value));
+
+// Uma linha por tipo de vídeo: nome, qualidade atual e a barra.
+const rows = DQ_TYPES.map(([key, label]) => {
+  const row = document.createElement("div");
+  row.className = "type";
+  const head = document.createElement("div");
+  head.className = "head";
+  const name = document.createElement("span");
+  name.textContent = t(label);
+  const value = document.createElement("b");
+  const slider = document.createElement("input");
+  slider.type = "range";
+  slider.min = 0;
+  slider.max = STEPS.length - 1;
+  slider.step = 1;
+  slider.setAttribute("aria-label", t(label));
+  slider.oninput = () => {
+    state[key] = STEPS[slider.value][0];
+    value.textContent = STEPS[slider.value][1];
+    chrome.storage.sync.set({ [key]: state[key] });
   };
-  $("levels").appendChild(b);
-  return b;
+  head.append(name, value);
+  row.append(head, slider);
+  $("types").appendChild(row);
+  return { key, row, name, label, slider, value };
 });
 
 function render() {
-  buttons.forEach((b, i) => b.classList.toggle("active", OPTIONS[i][0] === state.quality));
+  rows.forEach(({ key, row, name, label, slider, value }, n) => {
+    const i = stepOf(state[key]);
+    slider.value = i;
+    value.textContent = STEPS[i][1];
+    // Com "mesma qualidade para todos" só a primeira barra aparece e vale para qualquer vídeo.
+    row.hidden = state.sameQuality && n > 0;
+    name.textContent = t(state.sameQuality && n === 0 ? "typeAll" : label);
+  });
 }
 
-["enabled", "ignoreLive"].forEach((k) => {
-  $(k).onchange = () => {
-    state[k] = $(k).checked;
-    chrome.storage.sync.set({ [k]: state[k] });
-  };
-});
+$("enabled").onchange = () => {
+  state.enabled = $("enabled").checked;
+  chrome.storage.sync.set({ enabled: state.enabled });
+};
+
+$("same").onchange = () => {
+  state.sameQuality = $("same").checked;
+  chrome.storage.sync.set({ sameQuality: state.sameQuality });
+  render();
+};
 
 const donateUrl = dqDonateUrl(chrome.i18n.getUILanguage());
 if (donateUrl) {
@@ -40,6 +66,7 @@ if (donateUrl) {
 
 chrome.storage.sync.get(DQ_DEFAULTS, (s) => {
   state = { ...s };
-  ["enabled", "ignoreLive"].forEach((k) => ($(k).checked = state[k]));
+  $("enabled").checked = state.enabled;
+  $("same").checked = state.sameQuality;
   render();
 });

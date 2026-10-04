@@ -21,7 +21,7 @@ window.chrome={
    if(m.placeholders){for(const [n,p] of Object.entries(m.placeholders)){t=t.replace(new RegExp('\\$'+n+'\\$','gi'),(s||[])[parseInt(p.content.slice(1))-1]||'')}}
    return t}},
  storage:{
-  sync:{get(d,cb){cb(Object.assign({},d,q==='2'?{quality:'max'}:q==='3'?{quality:'hd720',ignoreLive:true}:{quality:'hd1080'}))},set(){}},
+  sync:{get(d,cb){cb(Object.assign({},d,q==='1'?{sameQuality:true,qualityNormal:'hd1080'}:q==='2'?{sameQuality:false,qualityNormal:'hd1080',qualityLive:'hd720',qualityMusic:'large'}:{sameQuality:false,qualityNormal:'hd1080',qualityLive:'auto',qualityMusic:'auto'}))},set(){}},
   local:{get(d,cb){cb({})},set(){}}},
  runtime:{}};
 </script>
@@ -34,20 +34,20 @@ $T = @{
     badge = 'Qualidade Padrão para YouTube'
     tile  = @('Qualidade Padrão para YouTube', 'Sempre na qualidade que você escolher')
     shots = @(
-      @('Todo vídeo na qualidade que você escolheu', 'Defina uma vez: 1080p, 4K ou o que preferir. Chega de abrir em 360p.'),
-      @('Sempre a máxima disponível', 'Escolha "Máxima" e cada vídeo abre na melhor qualidade que ele oferece.'),
-      @('Se não houver, usa a mais próxima', 'Sem 1080p no vídeo? A extensão usa a mais alta abaixo dela. E você pode ignorar lives.'))
+      @('Uma qualidade para todos os vídeos', 'Mova a barra, de 144p a 4K ou Máxima, e pronto. Chega de abrir em 360p.'),
+      @('Ou uma para cada tipo de vídeo', 'Vídeos comuns, lives e músicas, cada um com a sua barra.'),
+      @('Automática quando você preferir', 'Deixe o YouTube decidir em lives ou músicas e mantenha a sua escolha nos demais.'))
   }
   en = @{
     badge = 'Default Quality for YouTube'
     tile  = @('Default Quality for YouTube', 'Always at the quality you choose')
     shots = @(
-      @('Every video at the quality you chose', 'Set it once: 1080p, 4K or whatever you prefer. No more starting at 360p.'),
-      @('Always the highest available', 'Pick "Max" and every video opens at the best quality it offers.'),
-      @("No match? It uses the closest one", 'No 1080p on a video? The extension uses the highest one below it. You can also skip live streams.'))
+      @('One quality for all videos', 'Move the slider, from 144p to 4K or Max, and you are done. No more starting at 360p.'),
+      @('Or one for each kind of video', 'Regular videos, live streams and music, each with its own slider.'),
+      @('Auto when you prefer', 'Let YouTube decide on live streams or music and keep your choice on the rest.'))
   }
 }
-$heights = @(245, 245, 245)
+$heights = @(220, 335, 335)
 
 function Page($lang, $i) {
   $s = $T[$lang]; $h = $heights[$i]; $title = $s.shots[$i][0]; $sub = $s.shots[$i][1]; $v = $i + 1

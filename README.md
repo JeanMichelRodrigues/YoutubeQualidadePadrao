@@ -6,9 +6,9 @@ Chrome extension that sets the default YouTube video quality (e.g. always 1080p 
 
 ## Recursos / Features
 
-- Qualidade padrão de 144p a 2160p (4K), ou "Máxima" / Default quality from 144p to 2160p (4K), or "Max".
+- Uma barra para todos os vídeos, ou (desligando "Mesma qualidade para todos") uma para cada tipo: comuns, ao vivo e músicas / One slider for all videos, or (turning off "Same quality for all videos") one per kind: regular, live and music.
+- De 144p a 2160p (4K), "Máxima" ou "Automática" (o YouTube decide) / From 144p to 2160p (4K), "Max" or "Auto" (YouTube decides).
 - Se o vídeo não tiver a qualidade escolhida, usa a mais alta disponível abaixo dela / If the video doesn't offer it, uses the highest one below.
-- Opção de não aplicar em vídeos ao vivo / Optional: skip live streams.
 - Funciona nos Shorts / Works on Shorts.
 - Mudanças manuais durante o vídeo são respeitadas até o próximo vídeo / Manual changes are respected until the next video.
 - Sem coleta de dados, sem servidor, sem código remoto / No data collection, no server, no remote code.

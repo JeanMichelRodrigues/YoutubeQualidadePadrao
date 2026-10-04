@@ -1,4 +1,4 @@
-// Roda no contexto da própria página (world: MAIN) para usar a API do player do YouTube.
+// Roda no contexto da própria página (world MAIN) para usar a API do player do YouTube.
 (() => {
   // Do menor ao maior; "highres" é qualquer coisa acima de 4K.
   const ORDER = ["tiny", "small", "medium", "large", "hd720", "hd1080", "hd1440", "hd2160", "highres"];
@@ -35,14 +35,35 @@
     return levels.reduce((a, b) => (ORDER.indexOf(b) < ORDER.indexOf(a) ? b : a));
   }
 
-  function setQuality() {
+  // Qualidade que deve valer para o vídeo atual, ou null para deixar o YouTube decidir.
+  // "final" = última tentativa: aceita seguir sem saber a categoria do vídeo.
+  function target(final) {
     const c = cfg();
     const p = player();
-    if (!c || !c.enabled || !p) return;
+    if (!c || !c.enabled || !p) return null;
     const d = (typeof p.getVideoData === "function" && p.getVideoData()) || {};
-    if (c.ignoreLive && d.isLive) return;
-    const q = pick(c.quality, p.getAvailableQualityLevels() || []);
-    if (!q) return;
+    const r = (typeof p.getPlayerResponse === "function" && p.getPlayerResponse()) || null;
+    const vd = (r && r.videoDetails) || {};
+    // Durante a troca de vídeo a resposta pode ser a do anterior: espera a próxima tentativa.
+    const known = !r || (vd.videoId && (!d.video_id || vd.videoId === d.video_id));
+    if (!known && !final) return null;
+    const mf = known && r && r.microformat && r.microformat.playerMicroformatRenderer;
+    const kind = c.sameQuality
+      ? "Normal"
+      : d.isLive || vd.isLive
+        ? "Live"
+        : mf && mf.category === "Music"
+          ? "Music"
+          : "Normal";
+    const want = c["quality" + kind];
+    if (!want || want === "auto") return null;
+    return pick(want, p.getAvailableQualityLevels() || []);
+  }
+
+  function setQuality(final) {
+    const p = player();
+    const q = target(final);
+    if (!p || !q) return;
     if (typeof p.setPlaybackQualityRange === "function") p.setPlaybackQualityRange(q, q);
     if (typeof p.setPlaybackQuality === "function") p.setPlaybackQuality(q);
   }
@@ -54,9 +75,11 @@
     const key = v ? v.currentSrc || v.src || location.href : location.href;
     if (!force && key === lastKey) return; // uma vez por vídeo; mudanças manuais ficam
     lastKey = key;
-    setQuality();
-    // A lista de qualidades só fica completa depois de um tempo e o player às vezes reseta; reaplica.
-    [300, 1000, 2500].forEach((ms) => setTimeout(setQuality, ms));
+    setQuality(false);
+    // A lista de qualidades e a categoria só ficam completas depois de um tempo e o player
+    // às vezes reseta; reaplica.
+    [300, 1000].forEach((ms) => setTimeout(() => setQuality(false), ms));
+    setTimeout(() => setQuality(true), 2500);
   }
 
   ["loadedmetadata", "playing"].forEach((ev) =>
@@ -72,12 +95,11 @@
   document.addEventListener("yt-default-quality-changed", () => {
     apply(true);
     setTimeout(() => {
-      const c = cfg();
       const p = player();
-      if (!c || !c.enabled || !p || typeof p.getPlaybackQuality !== "function") return;
-      const want = pick(c.quality, p.getAvailableQualityLevels() || []);
-      if (want && p.getPlaybackQuality() !== want && typeof p.seekTo === "function") {
-        setQuality();
+      const q = target(true);
+      if (!p || !q || typeof p.getPlaybackQuality !== "function") return;
+      if (p.getPlaybackQuality() !== q && typeof p.seekTo === "function") {
+        setQuality(true);
         p.seekTo(p.getCurrentTime(), true);
       }
     }, 700);

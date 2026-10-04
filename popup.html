@@ -22,10 +22,10 @@
       background: linear-gradient(#fff, #fff) center / 2px 9px no-repeat #1e8e3e;
     }
     input[type=checkbox]:focus-visible { outline: 2px solid #8ab4f8; outline-offset: 2px; }
-    #levels { display: flex; flex-wrap: wrap; gap: 8px; }
-    .level { border: 0; border-radius: 16px; background: #3f3f3f; color: #fff; padding: 8px 12px; font-size: 13px; cursor: pointer; }
-    .level:hover { background: #555; }
-    .level.active { background: #fff; color: #000; }
+    .type { margin-top: 14px; }
+    .head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 4px; }
+    .head b { font-size: 14px; }
+    input[type=range] { width: 100%; margin: 0; accent-color: #fff; cursor: pointer; }
     .hint { color: #aaa; margin-top: 12px; font-size: 12px; }
     #donate { color: #8ab4f8; text-decoration: none; }
     #donate:hover { text-decoration: underline; }
@@ -38,9 +38,8 @@
     <label class="chk" style="margin:0"><input type="checkbox" id="enabled"> <span data-i18n="enabled"></span></label>
   </header>
 
-  <div id="levels"></div>
-
-  <label class="chk"><input type="checkbox" id="ignoreLive"> <span data-i18n="ignoreLive"></span></label>
+  <div id="types"></div>
+  <label class="chk"><input type="checkbox" id="same"> <span data-i18n="same"></span></label>
 
   <div class="hint" data-i18n="hint"></div>
   <div class="hint"><a id="donate" href="#" target="_blank" rel="noopener" hidden data-i18n="donate"></a></div>

@@ -1,9 +1,18 @@
 // Configurações padrão, compartilhadas por content.js e popup.js.
+// Cada tipo de vídeo tem a sua qualidade: "auto" (o YouTube decide), "max" ou um nível do player.
 const DQ_DEFAULTS = {
-  enabled: true,   // extensão ligada
-  quality: "hd1080", // qualidade desejada: "max" ou um nível do player (tiny..highres)
-  ignoreLive: false, // não aplicar em vídeos ao vivo
+  enabled: true,         // extensão ligada
+  sameQuality: true,     // mesma qualidade para todos os tipos (usa a de vídeos comuns)
+  qualityNormal: "hd1080", // vídeos comuns
+  qualityLive: "hd1080",   // transmissões ao vivo
+  qualityMusic: "hd1080",  // vídeos da categoria Música
 };
+// Tipos de vídeo, na ordem em que aparecem no popup: [chave salva, texto traduzido].
+const DQ_TYPES = [
+  ["qualityNormal", "typeNormal"],
+  ["qualityLive", "typeLive"],
+  ["qualityMusic", "typeMusic"],
+];
 // Níveis do player do YouTube, do menor ao maior, com o rótulo mostrado no popup.
 const DQ_LEVELS = [
   ["tiny", "144p"],

@@ -1,10 +1,15 @@
 {
   "extName": { "message": "Qualidade Padrão para YouTube" },
-  "extDesc": { "message": "Define a qualidade de vídeo padrão do YouTube (ex.: sempre 1080p ou a máxima disponível) e aplica em todo vídeo." },
+  "extDesc": { "message": "Define a qualidade de vídeo padrão do YouTube, com uma escolha para vídeos comuns, lives e músicas, e aplica em todo vídeo." },
   "headerTitle": { "message": "Qualidade padrão" },
   "enabled": { "message": "Ativada" },
-  "ignoreLive": { "message": "Não aplicar em vídeos ao vivo" },
+  "same": { "message": "Mesma qualidade para todos os vídeos" },
+  "typeAll": { "message": "Todos os vídeos" },
+  "typeNormal": { "message": "Vídeos comuns" },
+  "typeLive": { "message": "Ao vivo" },
+  "typeMusic": { "message": "Músicas" },
+  "auto": { "message": "Automática" },
   "max": { "message": "Máxima" },
-  "hint": { "message": "Se o vídeo não tiver a qualidade escolhida, a extensão usa a mais alta disponível abaixo dela." },
+  "hint": { "message": "Automática: o YouTube decide. Se o vídeo não tiver a qualidade escolhida, a extensão usa a mais alta disponível abaixo dela." },
   "donate": { "message": "☕ Gostou? Apoie o projeto" }
 }

@@ -1,10 +1,15 @@
 {
   "extName": { "message": "Default Quality for YouTube" },
-  "extDesc": { "message": "Sets the default YouTube video quality (e.g. always 1080p or the highest available) and applies it to every video." },
+  "extDesc": { "message": "Sets the default YouTube video quality, with a separate choice for regular videos, live streams and music, and applies it to every video." },
   "headerTitle": { "message": "Default quality" },
   "enabled": { "message": "Enabled" },
-  "ignoreLive": { "message": "Don't apply to live streams" },
+  "same": { "message": "Same quality for all videos" },
+  "typeAll": { "message": "All videos" },
+  "typeNormal": { "message": "Regular videos" },
+  "typeLive": { "message": "Live streams" },
+  "typeMusic": { "message": "Music" },
+  "auto": { "message": "Auto" },
   "max": { "message": "Max" },
-  "hint": { "message": "If a video doesn't offer the chosen quality, the extension uses the highest one available below it." },
+  "hint": { "message": "Auto: YouTube decides. If a video doesn't offer the chosen quality, the extension uses the highest one available below it." },
   "donate": { "message": "☕ Enjoying it? Support the project" }
 }
